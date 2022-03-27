@@ -19,7 +19,7 @@ Supports Platform: Linux, Debian
 
 How to use:
 
-    python3 MAC_Changer.py -i <interface> -m <new MAC address>
+    python MAC_Changer.py -i <interface> -m <new MAC address>
     
 
 
