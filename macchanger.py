@@ -3,6 +3,8 @@
 import subprocess
 import optparse
 import re
+from termcolor import colored
+
 
 def get_arguments():
     parser = optparse.OptionParser()
@@ -16,7 +18,7 @@ def get_arguments():
     return options
 
 def change_mac(interface, new_mac):
-    print("[+] Changing MAC address for " + interface + " to " + new_mac)
+    print(colored("[+] Changing MAC address for " + interface + " to " + new_mac, 'blue'))
     subprocess.call(["ifconfig", interface, "down"])
     subprocess.call(["ifconfig", interface, "hw", "ether", new_mac])
     subprocess.call(["ifconfig", interface, "up"])
@@ -28,19 +30,19 @@ def get_current_mac(interface):
     if mac_address_search_result:
         return mac_address_search_result.group(0)
     else:
-        print("[?]Could not read MAC address. Please try again.")
+        print(colored("[?]Could not read MAC address. Please try again.", 'red'))
 
 options = get_arguments()
 current_mac = get_current_mac(options.interface)
-print("Current MAC = " + str(current_mac))
+print(colored("Current MAC = " + str(current_mac), 'yellow'))
 
 change_mac(options.interface, options.new_mac)
 
 current_mac = get_current_mac(options.interface)
 if current_mac == options.new_mac:
-        print("[+] MAC address was successfully changed to " + current_mac)
+        print(colored("[+] MAC address was successfully changed to " + current_mac, 'green'))
 else:
-    print("[x] Sorry, the MAC address change was unsuccessful.")
+    print(colored("[x] Sorry, the MAC address change was unsuccessful.", 'red'))
 
 
 
